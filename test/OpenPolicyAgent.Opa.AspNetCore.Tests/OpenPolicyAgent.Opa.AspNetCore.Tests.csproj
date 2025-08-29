@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
 
     <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <!-- Normal Package Includes. -->
@@ -27,7 +28,7 @@
 
   <!-- OPA API Reference. -->
   <ItemGroup>
-    <PackageReference Include="OpenPolicyAgent.Opa" Version="1.4.1" />
+    <PackageReference Include="OpenPolicyAgent.Opa" Version="1.5.4" />
   </ItemGroup>
 
   <!-- Ensure our data files are copied next to the test executables. -->

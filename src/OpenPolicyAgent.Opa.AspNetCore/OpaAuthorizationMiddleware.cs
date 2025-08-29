@@ -232,12 +232,12 @@ public class OpaAuthorizationMiddleware
             if (_opaPath is not null)
             {
                 _logger.LogTrace("OPA path is {}", _opaPath);
-                resp = await _opa.evaluate<OpaResponse>(_opaPath, inputMap);
+                resp = await _opa.Evaluate<OpaResponse>(_opaPath, inputMap);
             }
             else
             {
                 _logger.LogTrace("Using default OPA path");
-                resp = await _opa.evaluateDefault<OpaResponse>(inputMap);
+                resp = await _opa.EvaluateDefault<OpaResponse>(inputMap);
             }
             _logger.LogTrace("OPA response is: {}", JsonConvert.SerializeObject(resp));
         }
