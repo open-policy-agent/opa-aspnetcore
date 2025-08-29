@@ -1,6 +1,6 @@
-﻿namespace Styra.Opa.AspNetCore.Tests;
+﻿namespace OpenPolicyAgent.Opa.AspNetCore.Tests;
 
-public class OPAContainerFixture : IAsyncLifetime
+public class EOPAContainerFixture : IAsyncLifetime
 {
     // Note: We disable this warning because we control when/how the constructor
     // will be invoked for this class.
@@ -15,12 +15,14 @@ public class OPAContainerFixture : IAsyncLifetime
             "testdata/simple/policy.rego",
             "testdata/simple/system.rego",
         };
-        string[] opaCmd = { "run", "--server", "--addr=0.0.0.0:8181" };
+        string[] opaCmd = ["run", "--server", "--addr=0.0.0.0:8181", "--disable-telemetry"];
         var startupCommand = new List<string>().Concat(opaCmd).Concat(startupFiles).ToArray();
 
         // Create a new instance of a container.
         var container = new ContainerBuilder()
-          .WithImage("openpolicyagent/opa:latest")
+          .WithImage("ghcr.io/open-policy-agent/eopa:latest")
+          .WithEnvironment("EOPA_LICENSE_TOKEN", Environment.GetEnvironmentVariable("EOPA_LICENSE_TOKEN"))
+          .WithEnvironment("EOPA_LICENSE_KEY", Environment.GetEnvironmentVariable("EOPA_LICENSE_KEY"))
           // Bind port 8181 of the container to a random port on the host.
           .WithPortBinding(8181, true)
           .WithCommand(startupCommand)
@@ -35,11 +37,12 @@ public class OPAContainerFixture : IAsyncLifetime
 
         // Start the container.
         await container.StartAsync()
-            .ConfigureAwait(false);
+          .ConfigureAwait(false);
         // DEBUG:
         // var (stderr, stdout) = await container.GetLogsAsync(default);
         // Console.WriteLine("STDERR: {0}", stderr);
         // Console.WriteLine("STDOUT: {0}", stdout);
+
         _container = container;
     }
     public async Task DisposeAsync()

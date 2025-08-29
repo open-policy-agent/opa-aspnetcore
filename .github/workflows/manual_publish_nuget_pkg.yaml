@@ -1,13 +1,12 @@
-name: "3a – Publish Package to NuGet"
+name: "Manually Publish Package to NuGet"
 
-# Trigger the action on push to main
+# This workflow is intended for populating the initial NuGet package.
 on:
-  push:
-    branches:
-      - "main"
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+permissions:
+  contents: read
 concurrency: ${{ github.workflow }}-${{ github.ref }}
 
 env:
@@ -16,15 +15,17 @@ env:
   NuGetDirectory: ${{ github.workspace }}/nuget
 
 jobs:
-  build-and-publish:
+  manual-build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0 # Get all history for automatic versioning
 
-      - name: Setup .NET
+      - name: Setup dotnet
         uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
 
       - name: Restore dependencies
         run: dotnet restore
@@ -35,17 +36,10 @@ jobs:
       - name: Test
         run: dotnet test --no-restore --verbosity normal
 
-      - name: Get latest version from NuGet
-        id: nuget_version
-        run: |
-          $latestVersion = (Invoke-WebRequest -Uri "https://api.nuget.org/v3-flatcontainer/styra.opa.aspnetcore/index.json" | ConvertFrom-Json).versions[-1]
-          echo "LATEST_VERSION=$latestVersion" >> $env:GITHUB_OUTPUT
-        shell: pwsh
-
       - name: Get current version
         id: current_version
         run: |
-          $currentVersion = (Select-Xml -Path src/Styra.Opa.AspNetCore/Styra.Opa.AspNetCore.csproj -XPath "//PackageVersion").Node.InnerText
+          $currentVersion = (Select-Xml -Path src/OpenPolicyAgent.Ucast.Linq/OpenPolicyAgent.Ucast.Linq.csproj -XPath "//PackageVersion").Node.InnerText
           echo "CURRENT_VERSION=$currentVersion" >> $env:GITHUB_OUTPUT
         shell: pwsh
 
@@ -53,7 +47,6 @@ jobs:
         run: dotnet pack --configuration Release --output ${{ env.NuGetDirectory }} --no-build
 
       - name: Publish NuGet package
-        if: steps.nuget_version.outputs.LATEST_VERSION != steps.current_version.outputs.CURRENT_VERSION
         run: |
           foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Filter *.nupkg)) {
             dotnet nuget push $file --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate

@@ -1,4 +1,4 @@
-name: "3b – Publish Github Release"
+name: "Publish Github Release"
 
 # Trigger the action on push to main
 on:
@@ -23,12 +23,12 @@ jobs:
         with:
           fetch-depth: 0 # Get all history for automatic versioning
 
-      - name: Generate Styra.Opa.AspNetCore GH release notes
+      - name: Generate OpenPolicyAgent.Opa.AspNetCore GH release notes
         run: scripts/latest-release-notes.sh --output=SDK_RELEASE_NOTES.md
         env:
           VERSION: ${{ steps.current_version.outputs.CURRENT_VERSION }}
 
-      - name: Create Styra.Opa.AspNetCore GH release
+      - name: Create OpenPolicyAgent.Opa.AspNetCore GH release
         uses: softprops/action-gh-release@v2
         with:
           name: ${{ github.ref_name }}

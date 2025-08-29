@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <PackageId>Styra.Opa.AspNetCore</PackageId>
+    <PackageId>OpenPolicyAgent.Opa.AspNetCore</PackageId>
     <Version>0.1.7</Version>
-    <Authors>Styra</Authors>
+    <Authors>The OPA Authors</Authors>
     <TargetFramework>net8.0</TargetFramework>
     <IsPackable>true</IsPackable>
     <Nullable>enable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>1591</NoWarn>
-    <RepositoryUrl>https://github.com/StyraInc/opa-aspnetcore</RepositoryUrl>
-    <PackageProjectUrl>https://docs.styra.com/sdk/aspnetcore/how-to/add-sdk</PackageProjectUrl>
-    <PackageLicenseExpression>APACHE-2.0</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/open-policy-agent/opa-aspnetcore</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/open-policy-agent/opa-aspnetcore</PackageProjectUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,8 +26,8 @@
   <ItemGroup>
     <PackageReference Include="newtonsoft.json" Version="13.0.3" />
     <PackageReference Include="nodatime" Version="3.2.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.1" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.1" />
-    <PackageReference Include="Styra.Opa" Version="1.4.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.8" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.8" />
+    <PackageReference Include="OpenPolicyAgent.Opa" Version="1.5.4" />
   </ItemGroup>
 </Project>

@@ -15,7 +15,7 @@ builder.ConfigureServices(services =>
 ```
 
 :::note
-Is there something you'd like to see the OPA ASP.NET Core SDK include in its logs? Feel free to open an issue [on the issue tracker](https://github.com/StyraInc/opa-aspnetcore/issues).
+Is there something you'd like to see the OPA ASP.NET Core SDK include in its logs? Feel free to open an issue [on the issue tracker](https://github.com/Open-policy-agent/opa-aspnetcore/issues).
 :::
 
 ## OPA Connectivity Issues
@@ -31,7 +31,7 @@ System.Net.Sockets.SocketException (111): Connection refused
 ```
 
 ```javastacktrace
-fail: Styra.Opa.OpaClient[688872823]
+fail: OpenPolicyAgent.Opa.OpaClient[688872823]
       executing policy 'this/rule/does/not/exist' failed with exception: Connection refused (localhost:8181)
 Unhandled exception. OpaException: executing policy at 'this/rule/does/not/exist' with failed due to exception 'System.Net.Http.HttpRequestException: Connection refused (localhost:8181)
  ---> System.Net.Sockets.SocketException (111): Connection refused
@@ -41,8 +41,8 @@ Unhandled exception. OpaException: executing policy at 'this/rule/does/not/exist
    at System.Net.Http.HttpConnectionPool.ConnectToTcpHostAsync(String host, Int32 port, HttpRequestMessage initialRequest, Boolean async, CancellationToken cancellationToken)
    --- End of inner exception stack trace ---
 ...
-   at Styra.Opa.OpaClient.queryMachinery[T](String path, Input input)
-   at Styra.Opa.OpaClient.evaluate[T](String path, Boolean input)
+   at OpenPolicyAgent.Opa.OpaClient.queryMachinery[T](String path, Input input)
+   at OpenPolicyAgent.Opa.OpaClient.evaluate[T](String path, Boolean input)
 ....
 ```
 
@@ -57,15 +57,15 @@ If you encounter these types of error, this typically indicates that the SDK was
 If your OPA policy does not correctly follow the output schema described [here](../reference/input-output-schema), the SDK will not be able to interpret the policy decisions. This may result in errors similar to the ones below:
 
 ```javastacktrace
-fail: Styra.Opa.AspNetCore.OpaAuthorizationMiddleware[0]
-      caught exception from OPA client: OpaException: Could not convert bool result to type Styra.Opa.AspNetCore.OpaResponse
-         at Styra.Opa.OpaClient.convertResult[T](Result resultValue)
-         at Styra.Opa.OpaClient.queryMachinery[T](String path, Input input)
-         at Styra.Opa.OpaClient.evaluate[T](String path, Object input, JsonSerializerSettings jsonSerializerSettings)
-         at Styra.Opa.AspNetCore.OpaAuthorizationMiddleware.OpaRequest(HttpContext context) in /home/philip/Downloads/Styra/__github/opa-aspnetcore/src/Styra.Opa.AspNetCore/OpaAuthorizationMiddleware.cs:line 235
+fail: OpenPolicyAgent.Opa.AspNetCore.OpaAuthorizationMiddleware[0]
+      caught exception from OPA client: OpaException: Could not convert bool result to type OpenPolicyAgent.Opa.AspNetCore.OpaResponse
+         at OpenPolicyAgent.Opa.OpaClient.convertResult[T](Result resultValue)
+         at OpenPolicyAgent.Opa.OpaClient.queryMachinery[T](String path, Input input)
+         at OpenPolicyAgent.Opa.OpaClient.evaluate[T](String path, Object input, JsonSerializerSettings jsonSerializerSettings)
+         at OpenPolicyAgent.Opa.AspNetCore.OpaAuthorizationMiddleware.OpaRequest(HttpContext context) in /home/.../opa-aspnetcore/src/OpenPolicyAgent.Opa.AspNetCore/OpaAuthorizationMiddleware.cs:line 235
 ```
 
-In the above sample, the SDK was configured to access a rule which evaluated to a boolean value. This isn't a `Newtonsoft.Json` serialization issue, but instead a failure to deserialize a boolean into an [`OpaResponse`](https://styrainc.github.io/opa-aspnetcore/api/Styra.Opa.AspNetCore.OpaResponse.html).
+In the above sample, the SDK was configured to access a rule which evaluated to a boolean value. This isn't a `Newtonsoft.Json` serialization issue, but instead a failure to deserialize a boolean into an [`OpaResponse`](https://open-policy-agent.github.io/opa-aspnetcore/api/OpenPolicyAgent.Opa.AspNetCore.OpaResponse.html).
 
 If you see these types of errors, then you should closely look at the output your policy is sending to the SDK. Your decision logs are a good place to start looking.
 

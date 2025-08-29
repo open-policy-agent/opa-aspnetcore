@@ -1,7 +1,7 @@
 
 using Newtonsoft.Json;
 
-namespace Styra.Opa.AspNetCore;
+namespace OpenPolicyAgent.Opa.AspNetCore;
 
 public class OpaResponse
 {

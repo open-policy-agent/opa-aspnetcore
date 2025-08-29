@@ -2,14 +2,14 @@
 
 ## Reference docs auto-publishing
 
-On every commit merged to `main`, the docs will automatically be rebuilt using DocFX, and then published using Github Pages as a "Deployment", similar to how the `StyraInc/opa-csharp` repo publishes its reference docs.
+On every commit merged to `main`, the docs will automatically be rebuilt using DocFX, and then published using Github Pages as a "Deployment", similar to how the `open-policy-agent/opa-csharp` repo publishes its reference docs.
 
 
 ## Release workflows
 
 ### Minor changes
 
-If you are doing minor bugfixes, simply merge your PRs to `main` after bumping the version in `src/Styra.Opa.AspNetCore/Styra.Opa.AspNetCore.csproj` (the main project file).
+If you are doing minor bugfixes, simply merge your PRs to `main` after bumping the version in `src/OpenPolicyAgent.Opa.AspNetCore/OpenPolicyAgent.Opa.AspNetCore.csproj` (the main project file).
 The release automation will then discover that the version differs from the latest version on NuGet, and will automatically publish the package after building and running tests.
 
 
