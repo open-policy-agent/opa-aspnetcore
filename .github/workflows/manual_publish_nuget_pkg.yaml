@@ -39,7 +39,7 @@ jobs:
       - name: Get current version
         id: current_version
         run: |
-          $currentVersion = (Select-Xml -Path src/OpenPolicyAgent.Ucast.Linq/OpenPolicyAgent.Ucast.Linq.csproj -XPath "//PackageVersion").Node.InnerText
+          $currentVersion = (Select-Xml -Path src/OpenPolicyAgent.Opa.AspNetCore/OpenPolicyAgent.Opa.AspNetCore.csproj -XPath "//PackageVersion").Node.InnerText
           echo "CURRENT_VERSION=$currentVersion" >> $env:GITHUB_OUTPUT
         shell: pwsh
 
