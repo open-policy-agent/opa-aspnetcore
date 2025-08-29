@@ -1,4 +1,4 @@
-﻿namespace Styra.Opa.AspNetCore.Tests;
+﻿namespace OpenPolicyAgent.Opa.AspNetCore.Tests;
 
 public class OPAContainerFixture : IAsyncLifetime
 {

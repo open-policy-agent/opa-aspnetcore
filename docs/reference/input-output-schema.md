@@ -1,6 +1,6 @@
 # OPA ASP.NET Core SDK Policy Input/Output Schema
 
-The OPA ASP.NET Core SDK makes calls to Enterprise OPA or Open Policy Agent to request an authorization decision.
+The OPA ASP.NET Core SDK makes calls to EOPA or Open Policy Agent to request an authorization decision.
 
 The policy that processes these authorization decision requests must know the structure of the input given by OPA ASP.NET Core, and must return an appropriately structured output.
 

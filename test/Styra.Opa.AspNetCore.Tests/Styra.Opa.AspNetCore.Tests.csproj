@@ -27,7 +27,7 @@
 
   <!-- OPA API Reference. -->
   <ItemGroup>
-    <PackageReference Include="Styra.Opa" Version="1.4.1" />
+    <PackageReference Include="OpenPolicyAgent.Opa" Version="1.4.1" />
   </ItemGroup>
 
   <!-- Ensure our data files are copied next to the test executables. -->
@@ -36,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Styra.Opa.AspNetCore\Styra.Opa.AspNetCore.csproj" />
+    <ProjectReference Include="..\..\src\OpenPolicyAgent.Opa.AspNetCore\OpenPolicyAgent.Opa.AspNetCore.csproj" />
   </ItemGroup>
 
 

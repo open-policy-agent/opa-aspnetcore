@@ -38,14 +38,14 @@ jobs:
       - name: Get latest version from NuGet
         id: nuget_version
         run: |
-          $latestVersion = (Invoke-WebRequest -Uri "https://api.nuget.org/v3-flatcontainer/styra.opa.aspnetcore/index.json" | ConvertFrom-Json).versions[-1]
+          $latestVersion = (Invoke-WebRequest -Uri "https://api.nuget.org/v3-flatcontainer/openpolicyagent.opa.aspnetcore/index.json" | ConvertFrom-Json).versions[-1]
           echo "LATEST_VERSION=$latestVersion" >> $env:GITHUB_OUTPUT
         shell: pwsh
 
       - name: Get current version
         id: current_version
         run: |
-          $currentVersion = (Select-Xml -Path src/Styra.Opa.AspNetCore/Styra.Opa.AspNetCore.csproj -XPath "//PackageVersion").Node.InnerText
+          $currentVersion = (Select-Xml -Path src/OpenPolicyAgent.Opa.AspNetCore/OpenPolicyAgent.Opa.AspNetCore.csproj -XPath "//PackageVersion").Node.InnerText
           echo "CURRENT_VERSION=$currentVersion" >> $env:GITHUB_OUTPUT
         shell: pwsh
 

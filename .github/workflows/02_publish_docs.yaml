@@ -1,4 +1,4 @@
-name: "2 – Publish Docs"
+name: "Publish Docs"
 
 # Trigger the action on push to main
 on:
@@ -27,7 +27,7 @@ concurrency:
 jobs:
   publish-docs:
     env:
-      STYRA_GH_PAGES_URL: https://styrainc.github.io/opa-aspnetcore
+      GH_PAGES_URL: https://open-policy-agent.github.io/opa-aspnetcore
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
