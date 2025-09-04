@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0 # Get all history for automatic versioning
 
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "8.0.x"
 
