@@ -22,7 +22,7 @@ jobs:
         uses: smorimoto/tune-github-hosted-runner-network@v1
       - uses: actions/checkout@v5
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "8.x"
       - name: Install dependencies
@@ -38,7 +38,7 @@ jobs:
         uses: smorimoto/tune-github-hosted-runner-network@v1
       - uses: actions/checkout@v5
       - name: Setup dotnet
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: "8.x"
       - name: Install dependencies
