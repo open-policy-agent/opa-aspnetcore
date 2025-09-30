@@ -28,7 +28,7 @@
 
   <!-- OPA API Reference. -->
   <ItemGroup>
-    <PackageReference Include="OpenPolicyAgent.Opa" Version="1.5.4" />
+    <PackageReference Include="OpenPolicyAgent.Opa" Version="1.6.1" />
   </ItemGroup>
 
   <!-- Ensure our data files are copied next to the test executables. -->
