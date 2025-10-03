@@ -2,8 +2,8 @@
 
 set -e
 
-TARGET_DIR=$(dirname "${BASH_SOURCE}")/..
-CHANGELOG="${TARGET_DIR}/CHANGELOG.md"
+BASE_DIR=$(dirname "${BASH_SOURCE}")/..
+CHANGELOG="${BASE_DIR}/CHANGELOG.md"
 
 usage() {
     echo "latest-release-notes.sh --output=<path>"
