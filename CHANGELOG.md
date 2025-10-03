@@ -3,6 +3,11 @@
 All notable changes to this project will be documented in this file. This
 project adheres to [Semantic Versioning](http://semver.org/).
 
+## 0.2.0
+
+This release includes release engineering improvements for the Github Releases and NuGet publishing workflows.
+It includes no significant code or dependency updates.
+
 ## 0.1.7
 
 This release includes minor documentation fixes.
