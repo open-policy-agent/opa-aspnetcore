@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <PackageId>OpenPolicyAgent.Opa.AspNetCore</PackageId>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>The OPA Authors</Authors>
     <TargetFramework>net8.0</TargetFramework>
     <IsPackable>true</IsPackable>
