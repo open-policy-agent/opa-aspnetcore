@@ -24,7 +24,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <PackageReference Include="newtonsoft.json" Version="13.0.3" />
+    <PackageReference Include="newtonsoft.json" Version="13.0.4" />
     <PackageReference Include="nodatime" Version="3.2.2" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="9.0.9" />
     <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="9.0.8" />
