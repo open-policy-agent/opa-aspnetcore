@@ -1,0 +1,82 @@
+name: Release Check
+
+on:
+  workflow_dispatch:
+    inputs:
+      base_ref:
+        description: 'Base branch to compare against (e.g. main)'
+        required: true
+        default: 'main'
+  pull_request: {}
+
+# When a new revision is pushed to a PR, cancel all in-progress CI runs for that
+# PR. See https://docs.github.com/en/actions/using-jobs/using-concurrency
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  release-check:
+    name: Release version check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0  # Fetch full history to access all commits
+          persist-credentials: false
+
+      - name: Check for release commits
+        id: check-release
+        env:
+          BASE_REF: ${{ inputs.base_ref || github.base_ref }}
+        run: |
+          RESULT=$(./scripts/get-release-from-commits.sh "origin/$BASE_REF" "HEAD")
+          echo "Release commits detected: $RESULT"
+          if [ -n "$RESULT" ]; then
+            echo "result=true" >> $GITHUB_OUTPUT
+            echo "commit_version=$RESULT" >> $GITHUB_OUTPUT
+          else
+            echo "result=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get CHANGELOG version
+        if: steps.check-release.outputs.result == 'true'
+        id: changelog
+        run: |
+          CHANGELOG_VERSION=$(grep -o -E '## [0-9.]+' CHANGELOG.md | head -n 1 | sed 's/## //' | grep -E '^[0-9.]+$' || echo "invalid")
+          echo "version=$CHANGELOG_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Get csproj version
+        if: steps.check-release.outputs.result == 'true'
+        id: csproj
+        run: |
+          CSPROJ_VERSION=$(./scripts/get-csproj-version.sh "src/OpenPolicyAgent.Opa.AspNetCore/OpenPolicyAgent.Opa.AspNetCore.csproj")
+          echo "version=$CSPROJ_VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Verify release versions match
+        if: steps.check-release.outputs.result == 'true'
+        env:
+          COMMIT_VERSION: ${{ steps.check-release.outputs.commit_version }}
+          CHANGELOG_VERSION: ${{ steps.changelog.outputs.version }}
+          CSPROJ_VERSION: ${{ steps.csproj.outputs.version }}
+        run: |
+          echo "ℹ️ Release Commit Detected"
+          echo ""
+          echo "Here are the latest versions reported from the places the release workflows will use:"
+          echo ""
+          echo "| Source | Version |"
+          echo "| --- | --- |"
+          echo "| Commit matching \`^Release .*\` | $COMMIT_VERSION |"
+          echo "| \`CHANGELOG.md\` | $CHANGELOG_VERSION |"
+          echo "| \`src/OpenPolicyAgent.Opa.AspNetCore/OpenPolicyAgent.Opa.AspNetCore.csproj\` | $CSPROJ_VERSION |"
+          echo ""
+
+          if [ "$COMMIT_VERSION" != "$CHANGELOG_VERSION" ] || [ "$COMMIT_VERSION" != "$CSPROJ_VERSION" ]; then
+            echo "❌ Version mismatch detected! All sources must agree before creating a release." >&2
+            exit 1
+          fi
+
+          echo "✅ All version sources agree: $COMMIT_VERSION"

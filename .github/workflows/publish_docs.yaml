@@ -10,9 +10,7 @@ on:
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  actions: read
-  pages: write
-  id-token: write
+  actions: read # needed to download workflow artifacts
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -26,6 +24,10 @@ concurrency:
 
 jobs:
   publish-docs:
+    name: Publish Docs
+    permissions:
+      pages: write # Needed to publish to GitHub Pages
+      id-token: write # Needed for OIDC authentication to deploy pages
     env:
       GH_PAGES_URL: https://open-policy-agent.github.io/opa-aspnetcore
     environment:
@@ -34,10 +36,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: false
 
       - name: Dotnet Setup
-        uses: actions/setup-dotnet@v5
+        uses: actions/setup-dotnet@c2fa09f4bde5ebb9d1777cf28262a3eb3db3ced7 # v5.2.0
         with:
           dotnet-version: 8.x
 
@@ -45,10 +49,10 @@ jobs:
       - run: docfx docs/docfx.json
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           # Upload entire repository
           path: "docs/_site"
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
