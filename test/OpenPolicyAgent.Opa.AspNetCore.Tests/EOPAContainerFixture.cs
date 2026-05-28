@@ -19,8 +19,7 @@ public class EOPAContainerFixture : IAsyncLifetime
         var startupCommand = new List<string>().Concat(opaCmd).Concat(startupFiles).ToArray();
 
         // Create a new instance of a container.
-        var container = new ContainerBuilder()
-          .WithImage("ghcr.io/open-policy-agent/eopa:latest")
+        var container = new ContainerBuilder("ghcr.io/open-policy-agent/eopa:latest")
           .WithEnvironment("EOPA_LICENSE_TOKEN", Environment.GetEnvironmentVariable("EOPA_LICENSE_TOKEN"))
           .WithEnvironment("EOPA_LICENSE_KEY", Environment.GetEnvironmentVariable("EOPA_LICENSE_KEY"))
           // Bind port 8181 of the container to a random port on the host.

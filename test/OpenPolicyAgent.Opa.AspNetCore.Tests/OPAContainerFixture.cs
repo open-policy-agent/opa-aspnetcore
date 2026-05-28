@@ -19,8 +19,7 @@ public class OPAContainerFixture : IAsyncLifetime
         var startupCommand = new List<string>().Concat(opaCmd).Concat(startupFiles).ToArray();
 
         // Create a new instance of a container.
-        var container = new ContainerBuilder()
-          .WithImage("openpolicyagent/opa:latest")
+        var container = new ContainerBuilder("openpolicyagent/opa:latest")
           // Bind port 8181 of the container to a random port on the host.
           .WithPortBinding(8181, true)
           .WithCommand(startupCommand)
